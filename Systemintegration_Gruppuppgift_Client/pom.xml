@@ -7,6 +7,14 @@
     <groupId>groupId</groupId>
     <artifactId>Systemintegration_Gruppuppgift_Client</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>4.3.13.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
-    
+
 </project>
