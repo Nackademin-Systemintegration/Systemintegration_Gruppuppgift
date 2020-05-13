@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MeasurementRepository
@@ -42,8 +43,9 @@ public class MeasurementRepository
                 int id = rs.getInt("Id");
                 float temperature = rs.getFloat("Temperature");
                 float humidity = rs.getFloat("Humidity");
-                float lighting = rs.getFloat("Lighting");
-                m = new Measurement(temperature, humidity, lighting);
+                float luminosity = rs.getFloat("Luminosity");
+                Date timeStamp = rs.getDate("TimeStamp");
+                m = new Measurement(temperature, humidity, luminosity, timeStamp);
                 m.setId(id);
             }
         }
@@ -72,8 +74,9 @@ public class MeasurementRepository
                 int id = rs.getInt("Id");
                 float temperature = rs.getFloat("Temperature");
                 float humidity = rs.getFloat("Humidity");
-                float lighting = rs.getFloat("Lighting");
-                m = new Measurement(temperature, humidity, lighting);
+                float luminosity = rs.getFloat("Luminosity");
+                Date timeStamp = rs.getDate("TimeStamp");
+                m = new Measurement(temperature, humidity, luminosity, timeStamp);
                 m.setId(id);
 
                 measurementReport.add(m);

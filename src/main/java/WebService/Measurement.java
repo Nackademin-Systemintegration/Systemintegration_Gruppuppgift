@@ -8,15 +8,17 @@ public class Measurement implements Serializable
     protected int id;
     protected float temperature;
     protected float humidity;
-    protected float lighting;
+    protected float luminosity;
+    protected Date timeStamp;
 
     public Measurement(){}
 
-    public Measurement(float temperature, float humidity, float lighting)
+    public Measurement(float temperature, float humidity, float luminosity, Date timeStamp)
     {
         this.temperature = temperature;
         this.humidity = humidity;
-        this.lighting = lighting;
+        this.luminosity = luminosity;
+        this.timeStamp = timeStamp;
     }
 
     public int getId()
@@ -49,13 +51,20 @@ public class Measurement implements Serializable
         this.humidity = humidity;
     }
 
-    public float getLighting()
+    public float getLuminosity()
     {
-        return lighting;
+        return luminosity;
     }
 
-    public void setLighting(float lighting)
+    public void setLuminosity(float luminosity) { this.luminosity = luminosity; }
+
+    public Date getTimeStamp()
     {
-        this.lighting = lighting;
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp)
+    {
+        this.timeStamp = timeStamp;
     }
 }
