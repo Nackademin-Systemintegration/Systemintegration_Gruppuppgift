@@ -27,6 +27,7 @@ public class MeasurementRepository
 
     public Measurement getLastMeasurement()
     {
+        System.out.println("hej");
         ResultSet rs = null;
         Measurement m = new Measurement();
         String query = "select * from measurements " +
