@@ -18,10 +18,11 @@ public class WebService
     }
 
     @RequestMapping(value = "/getLastMeasurement", produces = "application/xml")
-    public Measurement getLastMeasurementFromArduino()
+    public Measurement getLastMeasurementFromDB()
     {
+
         r = new MeasurementRepository();
-        return r.getLastMeasurementFromArduino();
+        return r.getLastMeasurementFromDB();
     }
 
     @RequestMapping(value = "/getMeasurementReport", produces = "application/xml")

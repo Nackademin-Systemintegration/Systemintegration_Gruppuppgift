@@ -6,19 +6,15 @@ import java.util.Date;
 public class Measurement implements Serializable
 {
     protected int id;
-    protected float temperature;
-    protected float humidity;
-    protected float luminosity;
+    protected String temperature;
     protected Date timeStamp;
 
     public Measurement(){}
 
-    public Measurement(float temperature, float humidity, float luminosity, Date timeStamp)
+    public Measurement(String temperature)
     {
         this.temperature = temperature;
-        this.humidity = humidity;
-        this.luminosity = luminosity;
-        this.timeStamp = timeStamp;
+
     }
 
     public int getId()
@@ -31,32 +27,16 @@ public class Measurement implements Serializable
         this.id = id;
     }
 
-    public float getTemperature()
+    public String getTemperature()
     {
         return temperature;
     }
 
-    public void setTemperature(float temperature)
+    public void setTemperature(String temperature)
     {
         this.temperature = temperature;
     }
 
-    public float getHumidity()
-    {
-        return humidity;
-    }
-
-    public void setHumidity(float humidity)
-    {
-        this.humidity = humidity;
-    }
-
-    public float getLuminosity()
-    {
-        return luminosity;
-    }
-
-    public void setLuminosity(float luminosity) { this.luminosity = luminosity; }
 
     public Date getTimeStamp()
     {

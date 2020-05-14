@@ -26,27 +26,30 @@ public class MeasurementRepository
                 + "hostNameInCertificate=*.database.windows.net;loginTimeout=30;", hostName, dbName, userName, password);
     }
 
-    public Measurement getLastMeasurementFromArduino()
+    public void getLastMeasurementFromArduino()
     {
+        ComPortInitializer CPI = new ComPortInitializer();
+        CPI.ComPortInit();
+    }
+    public Measurement getLastMeasurementFromDB(){
         ResultSet rs = null;
         Measurement m = new Measurement();
-        String query = "select Temperature, Humidity, Luminosity, TimeStamp from measurements " +
+        String query = "select id, temp, timestamp from measurements " +
                 "order by Id desc " +
                 "limit 1";
 
         try (Connection con = DriverManager.getConnection(url);
-            PreparedStatement stmt = con.prepareStatement(query))
+             PreparedStatement stmt = con.prepareStatement(query))
         {
             rs = stmt.executeQuery();
             while (rs.next())
             {
-                int id = rs.getInt("Id");
-                float temperature = rs.getFloat("Temperature");
-                float humidity = rs.getFloat("Humidity");
-                float luminosity = rs.getFloat("Luminosity");
-                Date timeStamp = rs.getDate("TimeStamp");
-                m = new Measurement(temperature, humidity, luminosity, timeStamp);
+                int id = rs.getInt("id");
+                String temperature = rs.getString("temp");
+                Date timeStamp = rs.getDate("timestamp");
+                m = new Measurement(temperature);
                 m.setId(id);
+                m.setTimeStamp(timeStamp);
             }
         }
         catch (Exception e)
@@ -56,19 +59,15 @@ public class MeasurementRepository
         insertLastMeasurementToDB(m);
         return m;
     }
-
     public void insertLastMeasurementToDB(Measurement lastMeasurement)
     {
-        String query = "insert into measurements (Temperature, Humidity, Luminosity, TimeStamp)" +
-                "values (?, ?, ?, ?, ?)";
+        String query = "insert into measurements (temp)" +
+                "values (?)";
 
         try (Connection con = DriverManager.getConnection(url);
              PreparedStatement stmt = con.prepareStatement(query))
         {
-            stmt.setFloat(1, lastMeasurement.temperature);
-            stmt.setFloat(2, lastMeasurement.humidity);
-            stmt.setFloat(3, lastMeasurement.luminosity);
-            stmt.setDate(4, (java.sql.Date)lastMeasurement.timeStamp);
+            stmt.setString(1, lastMeasurement.temperature);
             int numberOfUpdates = stmt.executeUpdate();
         }
         catch (Exception e)
@@ -82,7 +81,7 @@ public class MeasurementRepository
         ResultSet rs = null;
         Measurement m = new Measurement();
         List<Measurement> measurementReport = new ArrayList<Measurement>();
-        String query = "select Temperature, Humidity, Luminosity, TimeStamp from measurements " +
+        String query = "select id, temp, timestamp from measurements " +
                 "order by Id desc " +
                 "limit 7";
 
@@ -92,13 +91,12 @@ public class MeasurementRepository
             rs = stmt.executeQuery();
             while (rs.next())
             {
-                int id = rs.getInt("Id");
-                float temperature = rs.getFloat("Temperature");
-                float humidity = rs.getFloat("Humidity");
-                float luminosity = rs.getFloat("Luminosity");
-                Date timeStamp = rs.getDate("TimeStamp");
-                m = new Measurement(temperature, humidity, luminosity, timeStamp);
+                int id = rs.getInt("id");
+                String temperature = rs.getString("temp");
+                Date timeStamp = rs.getDate("timestamp");
+                m = new Measurement(temperature);
                 m.setId(id);
+                m.setTimeStamp(timeStamp);
 
                 measurementReport.add(m);
             }
