@@ -3,11 +3,12 @@ package WebApp;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class WebApp
 {
-    public void getLastMeasurement()
+    public void printLastMeasurementOnWeb()
     {
         String url = "http://localhost:8080/getLastMeasurement";
         RestTemplate restTemplate = new RestTemplate();
@@ -16,7 +17,7 @@ public class WebApp
         //System.out.println("Temperature: " + result.temperature + ", Humidity: " + result.humidity + ", Lighting: " + result.lighting + ".");
     }
 
-    public void getMeasurementReport()
+    public void printMeasurementReportOnWeb()
     {
         String url = "http://localhost:8080/getMeasurementReport";
         RestTemplate restTemplate = new RestTemplate();

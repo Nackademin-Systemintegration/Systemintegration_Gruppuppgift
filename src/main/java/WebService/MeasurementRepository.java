@@ -18,19 +18,19 @@ public class MeasurementRepository
 
     public MeasurementRepository()
     {
-        this.hostName = "your_server.database.windows.net"; // update me
-        this.dbName = "your_database"; // update me
-        this.userName = "your_username"; // update me
-        this.password = "your_password"; // update me
+        this.hostName = "elviras-sql-server.database.windows.net"; // update me
+        this.dbName = "elviras-sql-server"; // update me
+        this.userName = "dreamteam"; // update me
+        this.password = "S0ckerlönn!"; // update me
         this.url = String.format("jdbc:sqlserver://%s:1433;database=%s;user=%s;password=%s;encrypt=true;"
                 + "hostNameInCertificate=*.database.windows.net;loginTimeout=30;", hostName, dbName, userName, password);
     }
 
-    public Measurement getLastMeasurement()
+    public Measurement getLastMeasurementFromArduino()
     {
         ResultSet rs = null;
         Measurement m = new Measurement();
-        String query = "select * from measurements " +
+        String query = "select Temperature, Humidity, Luminosity, TimeStamp from measurements " +
                 "order by Id desc " +
                 "limit 1";
 
@@ -53,7 +53,28 @@ public class MeasurementRepository
         {
             e.printStackTrace();
         }
+        insertLastMeasurementToDB(m);
         return m;
+    }
+
+    public void insertLastMeasurementToDB(Measurement lastMeasurement)
+    {
+        String query = "insert into measurements (Temperature, Humidity, Luminosity, TimeStamp)" +
+                "values (?, ?, ?, ?, ?)";
+
+        try (Connection con = DriverManager.getConnection(url);
+             PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setFloat(1, lastMeasurement.temperature);
+            stmt.setFloat(2, lastMeasurement.humidity);
+            stmt.setFloat(3, lastMeasurement.luminosity);
+            stmt.setDate(4, (java.sql.Date)lastMeasurement.timeStamp);
+            int numberOfUpdates = stmt.executeUpdate();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public List<Measurement> getMeasurementReport()
@@ -61,7 +82,7 @@ public class MeasurementRepository
         ResultSet rs = null;
         Measurement m = new Measurement();
         List<Measurement> measurementReport = new ArrayList<Measurement>();
-        String query = "select * from measurements " +
+        String query = "select Temperature, Humidity, Luminosity, TimeStamp from measurements " +
                 "order by Id desc " +
                 "limit 7";
 

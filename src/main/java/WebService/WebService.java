@@ -1,5 +1,7 @@
 package WebService;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,10 +18,10 @@ public class WebService
     }
 
     @RequestMapping(value = "/getLastMeasurement", produces = "application/xml")
-    public Measurement getLastMeasurement()
+    public Measurement getLastMeasurementFromArduino()
     {
         r = new MeasurementRepository();
-        return r.getLastMeasurement();
+        return r.getLastMeasurementFromArduino();
     }
 
     @RequestMapping(value = "/getMeasurementReport", produces = "application/xml")
